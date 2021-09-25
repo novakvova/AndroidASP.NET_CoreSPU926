@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,6 +14,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Web.Store.Data;
+using Web.Store.Data.Entities.Identity;
 
 namespace Web.Store
 {
@@ -32,6 +34,18 @@ namespace Web.Store
             services.AddControllers();
             services.AddDbContext<EFAppContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddIdentity<AppUser, AppRole>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 5;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;
+            })
+               .AddEntityFrameworkStores<EFAppContext>()
+               .AddDefaultTokenProviders();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Web.Store", Version = "v1" });
@@ -40,9 +54,23 @@ namespace Web.Store
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,
+            RoleManager<AppRole> roleManager)
         {
-            if (env.IsDevelopment())
+            if (!roleManager.Roles.Any())
+            {
+                var result = roleManager.CreateAsync(new AppRole
+                {
+                    Name = "admin"
+                }).Result;
+
+                result = roleManager.CreateAsync(new AppRole
+                {
+                    Name = "user"
+                }).Result;
+            }
+
+                if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
