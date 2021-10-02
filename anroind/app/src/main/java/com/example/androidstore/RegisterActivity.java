@@ -2,6 +2,7 @@ package com.example.androidstore;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,7 +21,6 @@ public class RegisterActivity extends AppCompatActivity {
     public void OnClickButtonRegister(View view)
     {
         final TextInputEditText email = findViewById(R.id.textInputEmail);
-
         final TextInputLayout phoneLayout = findViewById(R.id.textFieldPhone);
         final TextInputEditText phone = findViewById(R.id.textInputPhone);
         if(phone.getText().toString().isEmpty())
@@ -32,5 +32,10 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
         Log.d("btnRegInfo", email.getText().toString());
+    }
+
+    public void OnClickProductsActivity(View view) {
+        Intent intent = new Intent(this, ProductActivity.class);
+        startActivity(intent);
     }
 }

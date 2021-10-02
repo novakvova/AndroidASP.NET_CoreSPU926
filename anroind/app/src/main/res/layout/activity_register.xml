@@ -59,6 +59,7 @@
 
 
         <Button
+            android:id="@+id/btnRegister"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginTop="40dp"
@@ -67,6 +68,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textFieldPhone" />
+
+        <Button
+            android:id="@+id/btnGoToProducts"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="15dp"
+            android:onClick="OnClickProductsActivity"
+            android:text="Список продуктів"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnRegister" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

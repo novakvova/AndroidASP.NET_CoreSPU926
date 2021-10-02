@@ -22,7 +22,17 @@ namespace Web.Store.Controllers
         [HttpGet("all")]
         public async Task<IActionResult> GetAll()
         {
-            var list = await _context.Products.ToListAsync();
+            var list = await _context.Products
+                .Select(x=> new ProductItemVM
+                {
+                    Id=x.Id,
+                    Name=x.Name,
+                    Price=x.Price,
+                    Image=x.ProductImages
+                        .Select(x=>x.Name)
+                        .FirstOrDefault() ?? "noimage.jpg"
+                })
+                .ToListAsync();
             return Ok(list);
         }
 
