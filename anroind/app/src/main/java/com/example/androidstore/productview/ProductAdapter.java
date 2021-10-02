@@ -14,6 +14,7 @@ import com.example.androidstore.dto.ProductDTO;
 import com.example.androidstore.network.ImageRequester;
 import com.example.androidstore.R;
 
+import java.util.Date;
 import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductCardViewHolder> {
@@ -39,7 +40,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductCardViewHolder> 
             ProductDTO model = modelList.get(position);
             holder.prodName.setText(model.getName());
             holder.prodPrice.setText(String.valueOf(model.getPrice()));
-            String url = Urls.BASE+"/images/" + model.getImage();
+            int i = (int) (new Date().getTime()/1000);
+            String url = Urls.BASE+"/images/" + model.getImage()+"?data="+i;
             imageRequester.setImageFromUrl(holder.prodImage, url);
         }
     }

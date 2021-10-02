@@ -11,6 +11,7 @@ import com.example.androidstore.dto.ProductDTO;
 import com.example.androidstore.dto.ProductImageDTO;
 import com.example.androidstore.network.services.ProductService;
 import com.example.androidstore.productview.ProductAdapter;
+import com.example.androidstore.utils.CommonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +32,7 @@ public class ProductActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2,
                 LinearLayoutManager.VERTICAL, false));
-
+        CommonUtils.showLoading(this);
         ProductService.getInstance()
                 .getProductsApi()
                 .all()
@@ -41,11 +42,12 @@ public class ProductActivity extends AppCompatActivity {
                         List<ProductDTO> list = response.body();
                         adapter = new ProductAdapter(list);
                         recyclerView.setAdapter(adapter);
+                        CommonUtils.hideLoading();
                     }
 
                     @Override
                     public void onFailure(Call<List<ProductDTO>> call, Throwable t) {
-
+                        CommonUtils.hideLoading();
                     }
                 });
 //        List<ProductDTO> list= new ArrayList<>();
