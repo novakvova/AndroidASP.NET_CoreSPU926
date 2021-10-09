@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.toolbox.NetworkImageView;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.androidstore.application.HomeApplication;
 import com.example.androidstore.constans.Urls;
 import com.example.androidstore.dto.ProductDTO;
@@ -48,6 +49,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductCardViewHolder> 
             //HomeApplication.getAppContext();
             Glide.with(HomeApplication.getAppContext())
                     .load(url)
+                    .circleCrop()
+                    .apply(new RequestOptions().override(300, 300))
                 .into(holder.prodImage);
 //            imageRequester.setImageFromUrl(holder.prodImage, url);
         }
