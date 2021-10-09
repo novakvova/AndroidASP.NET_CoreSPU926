@@ -6,9 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.toolbox.NetworkImageView;
+import com.bumptech.glide.Glide;
+import com.example.androidstore.application.HomeApplication;
 import com.example.androidstore.constans.Urls;
 import com.example.androidstore.dto.ProductDTO;
 import com.example.androidstore.network.ImageRequester;
@@ -42,7 +45,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductCardViewHolder> 
             holder.prodPrice.setText(String.valueOf(model.getPrice()));
             int i = (int) (new Date().getTime()/1000);
             String url = Urls.BASE+"/images/" + model.getImage()+"?data="+i;
-            imageRequester.setImageFromUrl(holder.prodImage, url);
+            //HomeApplication.getAppContext();
+            Glide.with(HomeApplication.getAppContext())
+                    .load(url)
+                .into(holder.prodImage);
+//            imageRequester.setImageFromUrl(holder.prodImage, url);
         }
     }
 

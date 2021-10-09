@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.media.Image;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
+import com.bumptech.glide.Glide;
 import com.example.androidstore.constans.Urls;
 import com.example.androidstore.dto.ProductDTO;
 import com.example.androidstore.dto.ProductImageDTO;
@@ -23,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private TextView txtinfo;
+    private ImageView imageView;
     private ImageRequester imageRequester;
     private NetworkImageView myImage;
     @Override
@@ -34,6 +37,12 @@ public class MainActivity extends AppCompatActivity {
         imageRequester = ImageRequester.getInstance();
         myImage = findViewById(R.id.myimg);
         imageRequester.setImageFromUrl(myImage, url);
+
+        imageView = findViewById(R.id.imageView);
+        Glide.with(this)
+                .load(url)
+                .circleCrop()
+                .into(imageView);
 
         txtinfo=findViewById(R.id.txtinfo);
 
@@ -57,25 +66,25 @@ public class MainActivity extends AppCompatActivity {
 //                    }
 //                });
 
-                ProductService.getInstance()
-                .getProductsApi()
-                .getPostWithID(1)
-                .enqueue(new Callback<List<ProductImageDTO>>() {
-                    @Override
-                    public void onResponse(Call<List<ProductImageDTO>> call, Response<List<ProductImageDTO>> response) {
-                        List<ProductImageDTO> list = response.body();
-                        String str="";
-                        for (ProductImageDTO item : list) {
-                            str+=item.getPath()+"\n";
-                        }
-                        txtinfo.setText(str);
-                    }
-
-                    @Override
-                    public void onFailure(Call<List<ProductImageDTO>> call, Throwable t) {
-
-                    }
-                });
+//                ProductService.getInstance()
+//                .getProductsApi()
+//                .getPostWithID(1)
+//                .enqueue(new Callback<List<ProductImageDTO>>() {
+//                    @Override
+//                    public void onResponse(Call<List<ProductImageDTO>> call, Response<List<ProductImageDTO>> response) {
+//                        List<ProductImageDTO> list = response.body();
+//                        String str="";
+//                        for (ProductImageDTO item : list) {
+//                            str+=item.getPath()+"\n";
+//                        }
+//                        txtinfo.setText(str);
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<List<ProductImageDTO>> call, Throwable t) {
+//
+//                    }
+//                });
 
 
 

@@ -30,9 +30,10 @@ public class ProductActivity extends AppCompatActivity {
         setContentView(R.layout.activity_product);
         recyclerView = findViewById(R.id.rcv);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2,
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 1,
                 LinearLayoutManager.VERTICAL, false));
         CommonUtils.showLoading(this);
+        ProductActivity myActivity = this;
         ProductService.getInstance()
                 .getProductsApi()
                 .all()
