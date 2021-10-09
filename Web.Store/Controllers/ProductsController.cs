@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Web.Store.Data;
+using Web.Store.Data.Entities;
 using Web.Store.Models;
 
 namespace Web.Store.Controllers
@@ -50,5 +51,19 @@ namespace Web.Store.Controllers
                 .ToListAsync();
             return Ok(list);
         }
+
+
+        [HttpPost("add")]
+        public async Task<IActionResult> Add(ProductAddVM model)
+        {
+            await _context.Products.AddAsync(new Product
+            {
+                Name=model.Name,
+                Price=model.Price
+            });
+            _context.SaveChanges();   
+            return Ok();
+        }
+
     }
 }

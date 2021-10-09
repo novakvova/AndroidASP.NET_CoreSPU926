@@ -46,6 +46,10 @@ public class RegisterActivity extends AppCompatActivity {
                 intent = new Intent(this, ProductActivity.class);
                 startActivity(intent);
                 return true;
+            case R.id.mproductadd:
+                intent = new Intent(this, ProductAddActivity.class);
+                startActivity(intent);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

@@ -10,4 +10,7 @@
     <item android:id="@+id/mproducts"
         android:title="Продукти"
         app:showAsAction="never" />
+    <item android:id="@+id/mproductadd"
+        android:title="Додати продукт"
+        app:showAsAction="never" />
 </menu>
