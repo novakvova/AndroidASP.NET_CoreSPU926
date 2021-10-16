@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -21,6 +22,7 @@ namespace Web.Store.Controllers
         {
             _context = context;
         }
+        [Authorize]
         [HttpGet("all")]
         public async Task<IActionResult> GetAll()
         {
