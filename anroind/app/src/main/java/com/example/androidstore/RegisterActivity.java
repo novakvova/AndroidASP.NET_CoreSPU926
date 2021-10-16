@@ -99,7 +99,8 @@ public class RegisterActivity extends AppCompatActivity {
                             String message = response.errorBody().string();
                             String res = "sdfsdf";
                         }
-                        RegisterResultDTO token = response.body();
+                        RegisterResultDTO myDto = response.body();
+                        String data = myDto.getToken();
                     }
 
                     @Override
