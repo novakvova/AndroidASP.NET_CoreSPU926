@@ -35,10 +35,16 @@ namespace Web.Store.Controllers
                 UserName = model.Email
             };
             var result = await _userManager.CreateAsync(user, model.Password);
-            if(!result.Succeeded)
+            if (!result.Succeeded)
             {
                 return BadRequest(result.Errors);
             }
+            result = await _userManager.AddToRoleAsync(user, "user");
+            if (!result.Succeeded)
+            {
+                return BadRequest(result.Errors);
+            }
+
             return Ok(new
             {
                 token = _jwtTokenService.CreateToken(user)
