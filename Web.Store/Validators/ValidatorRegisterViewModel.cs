@@ -18,6 +18,7 @@ namespace Web.Store.Validators
             RuleFor(x => x.Password)
                .NotEmpty().WithName("Password").WithMessage("Password is required")
                .MinimumLength(5).WithName("Password").WithMessage("Password minimum length is 5");
+
             //.Matches("[A-Z]").WithName("Password").WithMessage("Password must contain one or more capital letters.")
             //.Matches("[a-z]").WithName("Password").WithMessage("Password must contain one or more lowercase letters.")
             //.Matches(@"\d").WithName("Password").WithMessage("Password must contain one or more digits.")

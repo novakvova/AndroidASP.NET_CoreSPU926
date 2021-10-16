@@ -12,8 +12,22 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.androidstore.application.HomeApplication;
+import com.example.androidstore.dto.ProductDTO;
+import com.example.androidstore.dto.RegisterDTO;
+import com.example.androidstore.dto.RegisterResultDTO;
+import com.example.androidstore.network.services.AccountService;
+import com.example.androidstore.network.services.ProductService;
+import com.example.androidstore.productview.ProductAdapter;
+import com.example.androidstore.utils.CommonUtils;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+
+import java.util.List;
+
+import lombok.SneakyThrows;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -59,17 +73,43 @@ public class RegisterActivity extends AppCompatActivity {
     public void OnClickButtonRegister(View view)
     {
         final TextInputEditText email = findViewById(R.id.textInputEmail);
-        final TextInputLayout phoneLayout = findViewById(R.id.textFieldPhone);
-        final TextInputEditText phone = findViewById(R.id.textInputPhone);
-        if(phone.getText().toString().isEmpty())
-        {
-            phoneLayout.setError("Не вказали телефон");
-        }
-        else {
-            phoneLayout.setError(null);
-        }
+        final TextInputLayout passwordLayout = findViewById(R.id.textFieldPassword);
+        final TextInputEditText password = findViewById(R.id.textInputPassword);
+//        if(phone.getText().toString().isEmpty())
+//        {
+//            phoneLayout.setError("Не вказали телефон");
+//        }
+//        else {
+//            phoneLayout.setError(null);
+//        }
+//
+//        Log.d("btnRegInfo", email.getText().toString());
+        RegisterDTO registerDTO = new RegisterDTO();
+        registerDTO.setEmail(email.getText().toString());
+        registerDTO.setPassword(password.getText().toString());
+        RegisterActivity myActivity = this;
+        AccountService.getInstance()
+                .getJSONApi()
+                .Registration(registerDTO)
+                .enqueue(new Callback<RegisterResultDTO>() {
+                    @SneakyThrows
+                    @Override
+                    public void onResponse(Call<RegisterResultDTO> call, Response<RegisterResultDTO> response) {
+                        if(!response.isSuccessful()) {
+                            String message = response.errorBody().string();
+                            String res = "sdfsdf";
+                        }
+                        RegisterResultDTO token = response.body();
+                    }
 
-        Log.d("btnRegInfo", email.getText().toString());
+                    @Override
+                    public void onFailure(Call<RegisterResultDTO> call, Throwable t) {
+                        CommonUtils.hideLoading();
+                    }
+                });
+
+
+
     }
 
     public void OnClickProductsActivity(View view) {
